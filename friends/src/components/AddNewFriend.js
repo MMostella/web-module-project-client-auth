@@ -13,7 +13,7 @@ class AddNewFriend extends React.Component {
     handleChange = e => {
         this.setState({
             person: {
-                ...this.state.creds,
+                ...this.state.person,
                 [e.target.name]: e.target.value
             }
         })
@@ -21,9 +21,15 @@ class AddNewFriend extends React.Component {
 
     add = e => {
         e.preventDefault();
-        axios.post('http://localhost:5000/api/friends', this.state.person)
+        axios.post('http://localhost:5000/api/friends', this.state.person, {
+            headers: {
+                Authorization: localStorage.getItem('token')
+            }
+        })
             .then(res => {
-                this.setState(res.data.payload)
+                console.log(res);
+                this.props.setFriends(res.data)
+                this.props.history.push('/friends');
             })
             .catch(err => console.log(err))
     }

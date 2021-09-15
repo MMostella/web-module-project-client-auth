@@ -27,7 +27,10 @@ class Login extends React.Component {
                 localStorage.setItem('username', res.data.payload);
                 this.props.history.push('/friends');
             })
-            .catch(err => console.log(err), alert('You have no access to this page!'))
+            .catch(err => { 
+                console.log(err)
+                alert('You have no access to this page!')
+            })
     }
 
     render() {

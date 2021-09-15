@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 import Login from './components/Login';
@@ -9,6 +9,7 @@ import AddNewFriend from './components/AddNewFriend';
 import './App.css';
 
 function App() {
+  const [friends, setFriends] = useState([]);
 
   const isLoggedIn = localStorage.getItem('token');
 
@@ -29,8 +30,8 @@ function App() {
         <Switch>
           <Route exact path='/login' component={Login} />
           <Route path='/logout' component={Logout} />
-          <Route path='/friends' component={FriendsList} />
-          <Route path='/add' component={AddNewFriend} />
+          <Route path='/friends' component={() => <FriendsList friends={friends} setFriends={setFriends}/>} />
+          <Route path='/add' render={(props) => <AddNewFriend {...props} friends={friends} setFriends={setFriends}/>} />
           <Route path='/' component={Login} />
         </Switch>
       </div>

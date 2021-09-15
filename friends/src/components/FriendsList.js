@@ -4,24 +4,21 @@ import axiosWithAuth from "../utils/axiosWithAuth";
 
 
 class FriendsList extends React.Component {
-    state = {
-        friends: []
-    }
+    // state = {
+    //     friends: []
+    // }
 
     componentDidMount() {
         axiosWithAuth()
             .get('/friends')
             .then(res => {
-                this.setState({
-                    ...this.state,
-                    friends: res.data,
-                })
+                this.props.setFriends(res.data)
             })
             .catch(err => console.log(err))
     }
 
     render() {
-        const friends = this.state.friends;
+        const friends = this.props.friends;
         return (
             <div>
                 <h1>Friends List</h1>
